@@ -13,6 +13,6 @@ const GlobalStyle = createGlobalStyle`
   * {
     font-family: 'Noto Sans', sans-serif;
     box-sizing: border-box;
-    font-weight: 600;
+    font-weight: 500;
   }
 `

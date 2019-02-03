@@ -1,21 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default ({ value, onChange, add, reset }) => (
+export default ({ value, name, onChange, placeholder }) => (
   <Field
-    value={value}
-    onChange={e => onChange(e.target.value)}
-    onKeyDown={({ key }) => {
-      if (key === 'Enter' && value !== '') {
-        add(value)
-        reset()
-      }
-    }}
+    value={value[name]}
+    onChange={e => onChange({ ...value, [name]: e.target.value })}
+    placeholder={placeholder}
+    rows={name === 'content' ? 5 : 1}
   />
 )
 
-const Field = styled.input`
+const Field = styled.textarea`
   padding: 10px;
+  margin-bottom: 10px;
+  resize: none;
   border-radius: 5px;
   outline: none;
   border: 1px solid grey;

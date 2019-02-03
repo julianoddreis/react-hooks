@@ -12,7 +12,7 @@ const Button = styled.button`
   border: none;
   box-shadow: 0 2px 2px -2px gray;
   cursor: pointer;
-  margin: 20px 0;
+  margin-bottom: 10px;
   transition: all 0.2s ease-in-out;
   ${({ disabled }) =>
     disabled &&

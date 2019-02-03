@@ -5,6 +5,6 @@ export default initialValue => {
   return {
     value,
     setValue,
-    reset: () => setValue('')
+    reset: () => setValue(initialValue)
   }
 }

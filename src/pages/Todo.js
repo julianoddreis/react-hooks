@@ -1,26 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { Button, Field, Item } from '../components'
-import { useTodoState, useValueState } from '../helpers'
+import { Form, Item, Loader } from '../components'
+import { useTodoState } from '../helpers'
 
 export default () => {
-  const { todos, add, deleteTodo } = useTodoState([])
-  const { value, setValue, reset } = useValueState('')
+  const { todos, add, deleteTodo, fetchData, loading } = useTodoState([])
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <Container>
       <h1>Todo list</h1>
-      <Field value={value} onChange={setValue} add={add} reset={reset} />
-      <Button
-        label='Add'
-        disabled={value === ''}
-        onClick={() => {
-          add(value)
-          reset()
-        }}
-      />
-      {todos.map((item, i) => (
-        <Item key={i} label={item} deleteTodo={() => deleteTodo(i)} />
-      ))}
+      <Form add={add} />
+      {loading ? (
+        <Loader />
+      ) : (
+        todos.map((item, i) => (
+          <Item key={i} item={item} deleteTodo={() => deleteTodo(item._id)} />
+        ))
+      )}
     </Container>
   )
 }
@@ -29,5 +29,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  width: 300px;
+  width: 500px;
 `
