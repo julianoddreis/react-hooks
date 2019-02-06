@@ -1,13 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default ({ item, deleteTodo, ...props }) => (
+export default ({ item, update, deleteTodo, ...props }) => (
   <Item {...props}>
     <div>
       <Label>Title: {item.title}</Label>
-      <Label>Description: {item.content}</Label>
+      <Label>Description: {item.description}</Label>
     </div>
-    <Icon onClick={deleteTodo} className='fas fa-trash' />
+    <Buttons>
+      {item.status === 'todo' && (
+        <Icon
+          color='green'
+          onClick={() => update({ ...item, status: 'done' })}
+          className='fas fa-check-square'
+        />
+      )}
+      <Icon
+        color='red'
+        onClick={() => deleteTodo(item._id)}
+        className='fas fa-trash'
+      />
+    </Buttons>
   </Item>
 )
 
@@ -25,5 +38,12 @@ const Label = styled.p`
 `
 const Icon = styled.i`
   cursor: pointer;
-  color: red;
+  color: ${({ color }) => color};
+  margin: 5px;
+  font-size: 20px;
+`
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `

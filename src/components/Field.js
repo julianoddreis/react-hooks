@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default ({ value, name, onChange, placeholder }) => (
+export default ({ value, name, onChange }) => (
   <Field
+    name={name}
     value={value[name]}
-    onChange={e => onChange({ ...value, [name]: e.target.value })}
-    placeholder={placeholder}
-    rows={name === 'content' ? 5 : 1}
+    onChange={onChange}
+    placeholder={name[0].toUpperCase() + name.slice(1)}
+    rows={name === 'description' ? 5 : 1}
   />
 )
 

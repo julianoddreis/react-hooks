@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import { getNotes, createNote, deleteNote } from '../services'
+import { getNotes, createNote, deleteNote, updateNote } from '../services'
 
-export default initialValue => {
+export default (initialValue, status) => {
   const [todos, setTodos] = useState(initialValue)
   const [loading, setLoading] = useState(false)
 
   const fetchData = async () => {
     try {
       setLoading(true)
-      const res = await getNotes()
+      const res = await getNotes(status)
       setTodos(res.data)
-      setLoading(false)
     } catch (error) {
-      window.alert('Ops! Algo deu errado.')
+      window.alert(error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -25,9 +26,9 @@ export default initialValue => {
         setLoading(true)
         await createNote(todo)
         await fetchData()
-        setLoading(false)
       } catch (error) {
-        window.alert('Ops! Algo deu errado.')
+        window.alert(error.message)
+        setLoading(false)
       }
     },
     deleteTodo: async id => {
@@ -35,9 +36,21 @@ export default initialValue => {
         setLoading(true)
         await deleteNote(id)
         await fetchData()
-        setLoading(false)
+        window.alert('Note was deleted.')
       } catch (error) {
-        window.alert('Ops! Algo deu errado.')
+        window.alert(error.message)
+        setLoading(false)
+      }
+    },
+    update: async note => {
+      try {
+        setLoading(true)
+        await updateNote(note)
+        await fetchData()
+        window.alert('Note was updated.')
+      } catch (error) {
+        window.alert(error.message)
+        setLoading(false)
       }
     }
   }

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { Form, Item, Loader } from '../components'
+import { Form, Table, Loader } from '../components'
 import { useTodoState } from '../helpers'
 
 export default () => {
-  const { todos, add, deleteTodo, fetchData, loading } = useTodoState([])
+  const { add, fetchData, loading, ...hooksProps } = useTodoState([])
 
   useEffect(() => {
     fetchData()
@@ -12,15 +12,9 @@ export default () => {
 
   return (
     <Container>
-      <h1>Todo list</h1>
+      <h1>Create a note</h1>
       <Form add={add} />
-      {loading ? (
-        <Loader />
-      ) : (
-        todos.map((item, i) => (
-          <Item key={i} item={item} deleteTodo={() => deleteTodo(item._id)} />
-        ))
-      )}
+      {loading ? <Loader /> : <Table {...hooksProps} />}
     </Container>
   )
 }
@@ -28,6 +22,5 @@ export default () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
   width: 500px;
 `

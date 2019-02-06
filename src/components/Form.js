@@ -3,22 +3,15 @@ import { Button, Field } from '../components'
 import { useFormState } from '../helpers'
 
 export default ({ add }) => {
-  const { value, setValue, reset } = useFormState({ title: '', content: '' })
-  const disabled = value.title === '' || value.content === ''
+  const { value, onChange, reset } = useFormState({
+    title: '',
+    description: ''
+  })
+  const disabled = value.title === '' || value.description === ''
   return (
     <>
-      <Field
-        name='title'
-        placeholder='Title'
-        value={value}
-        onChange={setValue}
-      />
-      <Field
-        name='content'
-        placeholder='Description'
-        value={value}
-        onChange={setValue}
-      />
+      <Field name='title' value={value} onChange={onChange} />
+      <Field name='description' value={value} onChange={onChange} />
       <Button
         label='Add'
         disabled={disabled}

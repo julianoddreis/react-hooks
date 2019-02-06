@@ -4,7 +4,10 @@ export default initialValue => {
   const [value, setValue] = useState(initialValue)
   return {
     value,
-    setValue,
+    onChange: e => {
+      const { target } = e
+      setValue({ ...value, [target.name]: target.value })
+    },
     reset: () => setValue(initialValue)
   }
 }
