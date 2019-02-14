@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { getNotes, createNote, deleteNote, updateNote } from '../services'
 
-export default (initialValue, status) => {
+export default (initialValue, status, loadCount) => {
   const [todos, setTodos] = useState(initialValue)
   const [loading, setLoading] = useState(false)
 
@@ -9,6 +9,7 @@ export default (initialValue, status) => {
     try {
       setLoading(true)
       const res = await getNotes(status)
+      loadCount()
       setTodos(res.data)
     } catch (error) {
       window.alert(error.message)

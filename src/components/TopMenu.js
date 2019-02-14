@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { getCount } from '../services'
+import { Loader } from './'
 
-export default () => {
-  const [count, setCount] = useState({})
-
-  const fetchCount = async () => {
-    const res = await getCount()
-    setCount(res.data)
-  }
-
-  useEffect(() => {
-    fetchCount()
-  }, [])
-
+const TopMenu = ({ count, loading }) => {
   return (
     <Container>
       <MenuItem to='/' color='blue'>
@@ -22,11 +12,11 @@ export default () => {
       </MenuItem>
       <MenuItem to='/notes/todo' color='red'>
         <p>Todo</p>
-        <p>{count.todo}</p>
+        {loading ? <Loader /> : <p>{count.todo}</p>}
       </MenuItem>
       <MenuItem to='/notes/done' color='green'>
         <p>Done</p>
-        <p>{count.done}</p>
+        {loading ? <Loader /> : <p>{count.done}</p>}
       </MenuItem>
     </Container>
   )
@@ -54,3 +44,10 @@ const MenuItem = styled(Link)`
     }
   `}
 `
+
+const stateToProps = state => ({
+  loading: state.count.loading,
+  count: state.count.count
+})
+
+export default connect(stateToProps)(TopMenu)

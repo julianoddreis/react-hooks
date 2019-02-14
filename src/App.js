@@ -1,4 +1,6 @@
 import React from 'react'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 import { Router, Route, Switch } from 'react-router-dom'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Home, Notes } from './pages'
@@ -8,7 +10,7 @@ import createHistory from 'history/createBrowserHistory'
 const history = createHistory()
 
 export default () => (
-  <>
+  <Provider store={store}>
     <GlobalStyle />
     <Router history={history}>
       <>
@@ -21,7 +23,7 @@ export default () => (
         </Content>
       </>
     </Router>
-  </>
+  </Provider>
 )
 
 const GlobalStyle = createGlobalStyle`

@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { loadCount } from '../redux/modules/count'
 import styled from 'styled-components'
 import { Form, Table, Loader } from '../components'
 import { useTodoState } from '../helpers'
 
-export default () => {
-  const { add, fetchData, loading, ...hooksProps } = useTodoState([])
+const Home = props => {
+  const { add, fetchData, loading, ...hooksProps } = useTodoState(
+    [],
+    '',
+    props.loadCount
+  )
 
   useEffect(() => {
     fetchData()
@@ -24,3 +31,16 @@ const Container = styled.div`
   flex-direction: column;
   width: 500px;
 `
+
+const dispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      loadCount
+    },
+    dispatch
+  )
+
+export default connect(
+  null,
+  dispatchToProps
+)(Home)
